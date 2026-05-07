@@ -47,3 +47,9 @@ def validate_maximum_cash_amount(amount: int) -> ValidationResult:
     if amount > 10000:
         return ValidationResult.error("Amount cannot exceed 10000.")
     return ValidationResult.success()
+
+
+def validate_positive_amount(amount: int) -> ValidationResult:
+    if amount <= 0:
+        return ValidationResult.error("Amount must be positive.")
+    return ValidationResult.success()

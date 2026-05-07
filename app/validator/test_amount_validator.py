@@ -4,6 +4,7 @@ from app.validator.amount_validator import (
     ValidationError,
     ValidationResult,
     validate_maximum_cash_amount,
+    validate_positive_amount,
 )
 
 # Creation tests
@@ -138,5 +139,31 @@ def test_amount_validator_raises_on_too_large():
 
 def test_amount_validator_ok():
     result = validate_maximum_cash_amount(5000)
+    assert result.is_success is True
+    assert result.error_messages == []
+
+
+# validate_positive_amount tests
+
+def test_positive_amount_validator_with_negative_amount():
+    result = validate_positive_amount(-100)
+    assert result.is_success is False
+    assert "Amount must be positive." in result.error_messages
+
+
+def test_positive_amount_validator_with_zero():
+    result = validate_positive_amount(0)
+    assert result.is_success is False
+    assert "Amount must be positive." in result.error_messages
+
+
+def test_positive_amount_validator_with_positive_amount():
+    result = validate_positive_amount(100)
+    assert result.is_success is True
+    assert result.error_messages == []
+
+
+def test_positive_amount_validator_with_large_positive_amount():
+    result = validate_positive_amount(50000)
     assert result.is_success is True
     assert result.error_messages == []
