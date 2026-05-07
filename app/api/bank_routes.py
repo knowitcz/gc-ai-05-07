@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends
 
 from app.api.dependencies import get_transfer_service
 from app.services.bank_service import TransferService
+from app.validator.amount_validator import validate_positive_amount
 
 router = APIRouter()
 
@@ -15,6 +16,10 @@ def transfer_money_online(from_account_id: int, to_account_id: int, amount: int,
     Transfer money online between two accounts
     """
     try:
+        # Validate that amount is positive
+        validation_result = validate_positive_amount(amount)
+        validation_result.raise_if_error()
+        
         transfer_service.transfer_money(from_account_id, to_account_id, amount)
         return {"message": "Transfer successful"}
     except ValueError as e:
