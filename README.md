@@ -93,3 +93,5 @@ Open your browser and navigate to `http://localhost:8000/docs` to access the int
 ## Database Initialization
 
 Whenever you modify the database models or default data, you should delete the existing SQLite database file (`./app.db`) to apply the changes. The application will automatically create a new database with the updated schema and default data on the next run.
+
+> Placeholder note: this line exists only to create a safe dummy pull request for workflow testing.
